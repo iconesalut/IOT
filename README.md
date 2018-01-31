@@ -1,2 +1,2 @@
 # IOT
-This is a program who desassembly your oxn executable in a .s file
+This is a program who desassembly your executable in a .s file
