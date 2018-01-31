@@ -1,14 +1,23 @@
 #include "executable.hpp"
 
-Executable(std::string);
-~Executable();
+Executable::Executable(std::string file_name)
+{}
+Executable::~Executable()
+{}
 
-void extractFunction();
-void saveAt(std::string);
+void Executable::extractFunction()
+{}
+void Executable::saveAt(std::string)
+{}
 
-void AddFunctionData();
+void Executable::AddFunctionData()
+{}
 
-void findSection(std::string);
-void findSection(int);
-void findFunction(std::string);
-void findFunction(int);
+void Executable::findSection(std::string name)
+{}
+void Executable::findSection(int address)
+{}
+void Executable::findFunction(std::string name)
+{}
+void Executable::findFunction(int address)
+{}

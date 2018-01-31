@@ -4,7 +4,7 @@
 class AddressSort
 {
 public:
-    bool operator()(const Instruction a1, const int Instruction a2)
+    bool operator()(const Instruction a1, const Instruction a2)
     {
         return a1.address < a2.address;
     }
