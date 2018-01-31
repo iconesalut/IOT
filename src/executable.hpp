@@ -20,7 +20,7 @@ public:
 	void findFunction(std::string);
 	void findFunction(int);
 private:
-	Elf_Binary_t* binary;
+	Elf_Binary_t* m_binary;
 	std::vector<Function> functions, functions_data, function_optimizable;
 };
 #endif

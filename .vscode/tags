@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CALL	../IOT.py	/^    CALL = 0$/;"	kind:variable	line:54
+Executable	../IOT.py	/^class Executable():$/;"	kind:class	line:136
+Function	../IOT.py	/^class Function():$/;"	kind:class	line:89
+IOT.py	../IOT.py	1;"	kind:file	line:1
+Instruction	../IOT.py	/^class Instruction():$/;"	kind:class	line:53
+JUMP	../IOT.py	/^    JUMP = 1$/;"	kind:variable	line:55
+Operand	../IOT.py	/^class Operand():$/;"	kind:class	line:8
+__init__	../IOT.py	/^    def __init__(self, address, size, name, exe):$/;"	kind:member	line:90
+__init__	../IOT.py	/^    def __init__(self, file_name):$/;"	kind:member	line:137
+__init__	../IOT.py	/^    def __init__(self, insn, operands, function):$/;"	kind:member	line:56
+__init__	../IOT.py	/^    def __init__(self, op):$/;"	kind:member	line:9
+__str__	../IOT.py	/^    def __str__(self):$/;"	kind:member	line:118
+__str__	../IOT.py	/^    def __str__(self):$/;"	kind:member	line:12
+__str__	../IOT.py	/^    def __str__(self):$/;"	kind:member	line:78
+argparse	../IOT.py	/^import argparse$/;"	kind:namespace	line:5
+args	../IOT.py	/^    args = parse.parse_args()$/;"	kind:variable	line:253
+exe	../IOT.py	/^    exe = Executable(args.file_input)$/;"	kind:variable	line:254
+extract_function	../IOT.py	/^    def extract_function(self):$/;"	kind:member	line:224
+find_function	../IOT.py	/^    def find_function(self, address):$/;"	kind:member	line:211
+find_functionn	../IOT.py	/^    def find_functionn(self, name):$/;"	kind:member	line:217
+find_instruction	../IOT.py	/^    def find_instruction(self, address):$/;"	kind:member	line:111
+find_section	../IOT.py	/^    def find_section(self, section_name):$/;"	kind:member	line:198
+find_sectiona	../IOT.py	/^    def find_sectiona(self, address):$/;"	kind:member	line:204
+os	../IOT.py	/^import os$/;"	kind:namespace	line:6
+parse	../IOT.py	/^    parse = argparse.ArgumentParser()$/;"	kind:variable	line:250
+save_at	../IOT.py	/^    def save_at(self, file_name):$/;"	kind:member	line:161
+setup	../IOT.py	/^    def setup(self):$/;"	kind:member	line:100
+setup	../IOT.py	/^    def setup(self):$/;"	kind:member	line:68
