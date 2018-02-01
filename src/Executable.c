@@ -5,20 +5,21 @@
 
 JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstring name)
 {
-    const char* filename = env->GetStringUTFChars(name, 0);
+    const char* filename = (*env)->GetStringUTFChars(env, name, 0);
     Elf_Binary_t* binary = elf_parse(filename);
     fprintf(stdout, "Dynamic symbols:\n");
-    Elf_Symbol_t** dynamic_symbols = elf_binary->dynamic_symbols;
+    Elf_Symbol_t** dynamic_symbols = binary->dynamic_symbols;
+    int i;
     for (i = 0; dynamic_symbols[i] != NULL; ++i) {
       Elf_Symbol_t* symbol = dynamic_symbols[i];
-      const std::string import_export = "";
+      char import_export = "";
   
       if (symbol->is_imported) {
-        import_export = "I";
+        import_export = 'I';
       }
   
       if (symbol->is_imported) {
-        import_export = "E";
+        import_export = 'E';
       }
   
       fprintf(stdout, ""
@@ -41,7 +42,7 @@ JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstr
           import_export
           );
     }
-    env->ReleaseStringUTFChars(name, filename);
+    (*env)->ReleaseStringUTFChars(env, name, filename);
 }
 JNIEXPORT void JNICALL Java_Executable_saveAt(JNIEnv *env, jobject obj, jstring name)
 {}

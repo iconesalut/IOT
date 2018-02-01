@@ -1,8 +1,6 @@
-import Executable;
-
 public class IOT
 {
-    public static void main(String[] argv){
-        Executable exe = new Executable(argv[1]);
+    public static void main(String[] args){
+        Executable exe = new Executable(args[1]);
     }
 }
