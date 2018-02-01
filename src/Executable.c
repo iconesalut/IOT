@@ -43,13 +43,13 @@ JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstr
     }
     env->ReleaseStringUTFChars(name, filename);
 }
-JNIEXPORT void JNICALL Java_Executable_saveAt(JNIEnv *, jobject, jstring)
+JNIEXPORT void JNICALL Java_Executable_saveAt(JNIEnv *env, jobject obj, jstring name)
 {}
-JNIEXPORT void JNICALL Java_Executable_findSection__Ljava_lang_String_2(JNIEnv *, jobject, jstring)
+JNIEXPORT void JNICALL Java_Executable_findSection__Ljava_lang_String_2(JNIEnv *env, jobject obj, jstring name)
 {}
-JNIEXPORT void JNICALL Java_Executable_findSection__I(JNIEnv *, jobject, jint)
+JNIEXPORT void JNICALL Java_Executable_findSection__I(JNIEnv *env, jobject obj, jint address)
 {}
-JNIEXPORT void JNICALL Java_Executable_findFunction__Ljava_lang_String_2(JNIEnv *, jobject, jstring)
+JNIEXPORT void JNICALL Java_Executable_findFunction__Ljava_lang_String_2(JNIEnv *env, jobject obj, jstring name)
 {}
-JNIEXPORT void JNICALL Java_Executable_findFunction__I(JNIEnv *, jobject, jint)
+JNIEXPORT void JNICALL Java_Executable_findFunction__I(JNIEnv *env, jobject obj, jint address)
 {}
