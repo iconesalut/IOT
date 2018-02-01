@@ -1,6 +1,7 @@
 public class IOT
 {
     public static void main(String[] args){
-        Executable exe = new Executable(args[1]);
+        System.load("/home/icone/IOT_build/libIOT.so");
+        Executable exe = new Executable("/home/icone/IOT/test_iot");
     }
 }

@@ -1,48 +1,27 @@
 #include "Executable.h"
+#include "Elfparse/elfparse.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <LIEF/LIEF.h>
 
 JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstring name)
 {
-    const char* filename = (*env)->GetStringUTFChars(env, name, 0);
-    Elf_Binary_t* binary = elf_parse(filename);
-    fprintf(stdout, "Dynamic symbols:\n");
-    Elf_Symbol_t** dynamic_symbols = binary->dynamic_symbols;
-    int i;
-    for (i = 0; dynamic_symbols[i] != NULL; ++i) {
-      Elf_Symbol_t* symbol = dynamic_symbols[i];
-      char import_export = "";
-  
-      if (symbol->is_imported) {
-        import_export = 'I';
-      }
-  
-      if (symbol->is_imported) {
-        import_export = 'E';
-      }
-  
-      fprintf(stdout, ""
-          "%-20s "
-          "%-10s "
-          "%-10s "
-          "0x%02x "
-          "0x%02x"
-          "0x%010" PRIx64 " "
-          "0x%06" PRIx64 " "
-          "%-3s "
-          "\n",
-          symbol->name,
-          ELF_SYMBOL_TYPES_to_string(symbol->type),
-          SYMBOL_BINDINGS_to_string(symbol->binding),
-          symbol->other,
-          symbol->shndx,
-          symbol->value,
-          symbol->size,
-          import_export
-          );
-    }
-    (*env)->ReleaseStringUTFChars(env, name, filename);
+	const char* filename = (*env)->GetStringUTFChars(env, name, 0);
+	printf(filename);
+	printf("\n");
+	t_elf exe;
+	int ret = elf_load_file(filename, &exe);
+	size_t i;
+	for(i = 0;i < elf_header_get_shnum(&exe);i++)
+	{
+		const char* name;
+		if(elf_section_get_name(&exe,&exe.sections[i],&name) != -1)
+		{
+			printf(name);
+			printf("\n");
+		}
+	}
+	elf_free(&exe);
+	(*env)->ReleaseStringUTFChars(env, name, filename);
 }
 JNIEXPORT void JNICALL Java_Executable_saveAt(JNIEnv *env, jobject obj, jstring name)
 {}
