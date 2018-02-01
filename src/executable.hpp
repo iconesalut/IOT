@@ -20,6 +20,9 @@ public:
 	void findFunction(std::string);
 	void findFunction(int);
 private:
+	csh m_handle;
+	cs_arch m_arch;
+	cs_mode mode;
 	std::unique_ptr<const LIEF::ELF::Binary> m_binary;
 	std::vector<Function> m_functions, m_functionsData, m_functionOptimizable;
 };

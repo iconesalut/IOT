@@ -34,3 +34,9 @@ void Executable::findFunction(std::string name)
 {}
 void Executable::findFunction(int address)
 {}
+
+int main(int argc, char** argv)
+{
+  if(argc > 2)
+    Executable exe(argv[1]);
+}
