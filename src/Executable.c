@@ -1,5 +1,7 @@
 #include "Executable.h"
 #include "Elfparse/elfparse.h"
+#include <capstone/capstone.h>
+#include <capstone/x86.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,6 +10,9 @@ JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstr
 	const char* filename = (*env)->GetStringUTFChars(env, name, 0);
 	printf(filename);
 	printf("\n");
+	csh handle;
+	cs_open(CS_ARCH_X86,CS_MODE_64,&handle);
+	cs_option(handle,CS_OPT_SYNTAX,CS_OPT_SYNTAX_ATT);
 	t_elf exe;
 	int ret = elf_load_file(filename, &exe);
 	size_t i;
@@ -18,6 +23,17 @@ JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstr
 		{
 			printf(name);
 			printf("\n");
+			cs_insn* insn;
+			size_t count;
+			count = cs_disasm(handle, exe.sections[i].content, elf_section_get_size(&exe, &exe.sections[i]), elf_section_get_offset(&exe, &exe.sections[i]), 0, &insn);
+			if(count)
+			{
+				size_t j;
+				for(j = 0;j < count;j++)
+				{
+					printf("\t%s\t%s\n", insn[j].mnemonic, insn[j].op_str);
+				}
+			}
 		}
 	}
 	elf_free(&exe);
