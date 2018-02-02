@@ -29,9 +29,7 @@ public class Function{
 	public Section section(){
 		return m_section;
 	}
-	public void addInstruction(Instruction instruction){
-	}
-	public native Instruction(int);
+	public native Instruction findInstruction(int);
 	public String toString(){
 		String result = "";
 		if(m_section.name == ".text"){
