@@ -26,33 +26,33 @@ JNIEXPORT void JNICALL Java_Executable_saveAt
 /*
  * Class:     Executable
  * Method:    findSection
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;)Lcom/sun/org/apache/bcel/internal/generic/Instruction;
  */
-JNIEXPORT void JNICALL Java_Executable_findSection__Ljava_lang_String_2
+JNIEXPORT jobject JNICALL Java_Executable_findSection__Ljava_lang_String_2
   (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     Executable
  * Method:    findSection
- * Signature: (I)V
+ * Signature: (I)Lcom/sun/org/apache/bcel/internal/generic/Instruction;
  */
-JNIEXPORT void JNICALL Java_Executable_findSection__I
+JNIEXPORT jobject JNICALL Java_Executable_findSection__I
   (JNIEnv *, jobject, jint);
 
 /*
  * Class:     Executable
  * Method:    findFunction
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;)Lcom/sun/org/apache/bcel/internal/generic/Instruction;
  */
-JNIEXPORT void JNICALL Java_Executable_findFunction__Ljava_lang_String_2
+JNIEXPORT jobject JNICALL Java_Executable_findFunction__Ljava_lang_String_2
   (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     Executable
  * Method:    findFunction
- * Signature: (I)V
+ * Signature: (I)Lcom/sun/org/apache/bcel/internal/generic/Instruction;
  */
-JNIEXPORT void JNICALL Java_Executable_findFunction__I
+JNIEXPORT jobject JNICALL Java_Executable_findFunction__I
   (JNIEnv *, jobject, jint);
 
 #ifdef __cplusplus
