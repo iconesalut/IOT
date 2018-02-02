@@ -21,17 +21,20 @@ JNIEXPORT void JNICALL Java_Executable_initBinary(JNIEnv *env, jobject obj, jstr
 		const char* name;
 		if(elf_section_get_name(&exe,&exe.sections[i],&name) != -1)
 		{
-			printf(name);
-			printf("\n");
-			cs_insn* insn;
-			size_t count;
-			count = cs_disasm(handle, exe.sections[i].content, elf_section_get_size(&exe, &exe.sections[i]), elf_section_get_offset(&exe, &exe.sections[i]), 0, &insn);
-			if(count)
+			if(name != ".rodata" & name != ".bss" & name !=".data")
 			{
-				size_t j;
-				for(j = 0;j < count;j++)
+				printf(name);
+				printf("\n");
+				cs_insn* insn;
+				size_t count;
+				count = cs_disasm(handle, exe.sections[i].content, elf_section_get_size(&exe, &exe.sections[i]), elf_section_get_offset(&exe, &exe.sections[i]), 0, &insn);
+				if(count)
 				{
-					printf("\t%s\t%s\n", insn[j].mnemonic, insn[j].op_str);
+					size_t j;
+					for(j = 0;j < count;j++)
+					{
+						printf("\t%s\t%s\n", insn[j].mnemonic, insn[j].op_str);
+					}
 				}
 			}
 		}
