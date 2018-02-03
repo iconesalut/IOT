@@ -1,10 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(IOT)
-find_package(JNI REQUIRED)
-find_package(Java REQUIRED)
-include(UseJava)
-include_directories(${JNI_INCLUDE_DIRS})
 set(SOURCE
     src/Elfparse/elf_free.c
     src/Elfparse/elf_get_strtab.c
@@ -24,18 +19,9 @@ set(SOURCE
     src/Elfparse/elf_symtab.c
     src/Elfparse/utils.c
     src/Executable.c
+    src/main.c
 )
-set(SOURCE_JAVA
-    java/Function.java
-    java/Section.java
-    java/Executable.java
-    java/IOT.java
-)
-add_library(${PROJECT_NAME} SHARED ${SOURCE})
-add_jar(${PROJECT_NAME}j
-    SOURCE SOURCE_JAVA
-    ENTRY_POINT IOT
-)
+add_executable(${PROJECT_NAME} ${SOURCE})
 target_link_libraries(
     ${PROJECT_NAME}
     capstone
