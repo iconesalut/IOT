@@ -25,9 +25,15 @@ set(SOURCE
     src/Elfparse/utils.c
     src/Executable.c
 )
+set(SOURCE_JAVA
+    java/Function.java
+    java/Section.java
+    java/Executable.java
+    java/IOT.java
+)
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 add_jar(${PROJECT_NAME}j
-    SOURCE java/Executable.java java/IOT.java
+    SOURCE SOURCE_JAVA
     ENTRY_POINT IOT
 )
 target_link_libraries(

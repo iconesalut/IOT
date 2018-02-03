@@ -1,4 +1,3 @@
-
 public class Function{
 	private Section m_section;
 	private int m_address;

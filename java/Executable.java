@@ -1,26 +1,31 @@
-import com.sun.org.apache.bcel.internal.generic.Instruction;
-import java.awt.Insets;
-
 public class Executable
 {
-    private Instruction[] m_instructions;
+    private Function[] m_functions;
+    private Section[] m_sections;
     private String m_name;
 
     public Executable(String name)
     {
         this.name = name;
         initBinary(name);
+
+        for(Function function : m_functions){
+            System.out.print(function.name);
+        }
     }
     public native void initBinary(String name);
     public native void saveAt(String file_name);
 
-    public native Instruction findSection(String name);
-    public native Instruction findSection(int address);
-    public native Instruction findFunction(String name);
-    public native Instruction findFunction(int address);
+    public native Section findSection(String name);
+    public native Section findSection(int address);
+    public native Function findFunction(String name);
+    public native Function findFunction(int address);
 
-    public Instruction[] instruction(){
-        return m_instructions;
+    public Function[] function(){
+        return m_functions;
+    }
+    public Section[] sections(){
+        return m_sections;
     }
     public String name(){
         return m_name;
