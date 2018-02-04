@@ -33,7 +33,7 @@ int extractFunction(Executable* exe)
 		const char* name;
         elf_sym_get_name(exe->elf, sym, &name);
         
-        Function f = {name, elf_sym_get_value(exe->elf, sym), elf_sym_get_size(exe->elf, sym), 0};
+        Function f = {name, 0, 0, exe, findSectioni(exe, elf_sym_get_value(exe->elf, sym)), elf_sym_get_value(exe->elf, sym), elf_sym_get_size(exe->elf, sym), 0};
 		if(elf_sym_get_value(exe->elf, sym) !=0 & elf_sym_get_size(exe, sym) != 0 & elf_sym_get_info(exe, sym) == 18 & name != "_start" & name != "")
 		{
             f.optimizable = 1;
@@ -94,7 +94,7 @@ t_elf_section* findSectioni(Executable* exe, const int address)
 {
     size_t i;
     for(i = 0;i < elf_header_get_shnum(exe->elf);i++)
-        if(elf_section_get_offset(exe, &exe->elf->sections[i]) == address)
+        if(elf_section_get_offset(exe, &exe->elf->sections[i]) < address & elf_section_get_offset(exe, &exe->elf->sections[i]) + elf_section_get_size(exe, &exe->elf->sections[i]) > address)
             return &exe->elf->sections[i];
 
     return 0;
@@ -112,7 +112,7 @@ Function* findFunctioni(Executable* exe, const int address)
 {
     size_t i;
     for(i = 0;i < exe->numberFunction;i++)
-        if(exe->functions[i].address == address)
+        if(exe->functions[i].address < address & exe->functions[i].address + exe->functions[i].size > address)
             return &exe->functions[i];
 
     return 0;

@@ -19,6 +19,8 @@ set(SOURCE
     src/Elfparse/elf_sym2.c
     src/Elfparse/elf_symtab.c
     src/Elfparse/utils.c
+    src/function.c
+    src/instruction.c
     src/executable.c
     src/main.c
 )
