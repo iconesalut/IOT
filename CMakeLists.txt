@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
+project(IOT)
 set(SOURCE
     src/Elfparse/elf_free.c
     src/Elfparse/elf_get_strtab.c
@@ -18,7 +19,7 @@ set(SOURCE
     src/Elfparse/elf_sym2.c
     src/Elfparse/elf_symtab.c
     src/Elfparse/utils.c
-    src/Executable.c
+    src/executable.c
     src/main.c
 )
 add_executable(${PROJECT_NAME} ${SOURCE})
