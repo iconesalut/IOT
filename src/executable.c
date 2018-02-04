@@ -34,7 +34,7 @@ int extractFunction(Executable* exe)
         elf_sym_get_name(exe->elf, sym, &name);
         
         Function f = {name, 0, 0, exe, findSectioni(exe, elf_sym_get_value(exe->elf, sym)), elf_sym_get_value(exe->elf, sym), elf_sym_get_size(exe->elf, sym), 0};
-		if(elf_sym_get_value(exe->elf, sym) !=0 & elf_sym_get_size(exe, sym) != 0 & elf_sym_get_info(exe, sym) == 18 & name != "_start" & name != "")
+		if(elf_sym_get_value(exe->elf, sym) !=0 & elf_sym_get_size(exe, sym) != 0 & elf_sym_get_info(exe, sym) == 18 & /*strcmp(name, "_start") &*/ name != "")
 		{
             f.optimizable = 1;
 			printf(name);
@@ -52,6 +52,44 @@ int extractFunction(Executable* exe)
 
 	return 0;
 }
+int disassembly(Executable* exe)
+{
+    csh handle;
+    cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
+    cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
+
+    size_t i;
+    for(i = 0;i < elf_header_get_shnum(exe->elf);i++)
+    {
+        const char* name;
+        if(elf_section_get_name(exe->elf, &exe->elf->sections[i], &name) != -1)
+        {
+            printf("%s\n", name);
+            if(!strcmp(name, ".text"))
+            {
+                cs_insn* insn;
+                size_t count;
+                count = cs_disasm(handle, exe->elf->sections[i].content, elf_section_get_size(exe->elf, &exe->elf->sections[i]), elf_section_get_offset(exe->elf, &exe->elf->sections[i]), 0, &insn);
+                if(count)
+                {
+                    size_t j;
+                    for(j = 0;j < count;j++)
+                    {
+                        Function* f = findFunctioni(exe, insn[j].address);
+                        if(f != 0)
+                            if(f->optimizable)
+                            {
+                                printf("%s->\t%s\t%s\n", f->name, insn[j].mnemonic, insn[j].op_str);
+                                Instruction instruction = {insn->address, insn->size, f, insn->mnemonic, 1, insn->op_str, (void*)f->firstInstruction};
+                                f->firstInstruction = &instruction;
+                            }
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
 
 void loadExecutable(Executable* exe, const char* name)
 {
@@ -59,16 +97,35 @@ void loadExecutable(Executable* exe, const char* name)
     int ret = elf_load_file(name, exe->elf);
     exe->name = name;
     extractFunction(exe);
+    disassembly(exe);
     printf("------------------------------\n");
     size_t i;
     for(i = 0;i < exe->numberFunction;i++)
     {
         if(exe->functions[i].optimizable)
+        {
+            Instruction* instruct = exe->functions[i].firstInstruction;;
+            while(instruct != 0)
+            {
+                printf(instructionToString(instruct));
+                instruct = nextInstruction(instruct);
+            }
             printf("%s\n", exe->functions[i].name);
+        }
     }
 }
 void unloadExecutable(Executable* exe)
 {
+    size_t i;
+    for(i = 0;i < exe->numberFunction;i++)
+        while(exe->functions[i].firstInstruction != 0)
+        {
+            void* insn = exe->functions[i].firstInstruction;
+            Instruction* instruction = (Instruction*)exe->functions[i].firstInstruction;
+            exe->functions[i].firstInstruction = instruction->next;
+            free(insn);
+        }
+
     free(exe->functions);
     elf_free(exe->elf);
     free(exe->elf);
@@ -112,7 +169,7 @@ Function* findFunctioni(Executable* exe, const int address)
 {
     size_t i;
     for(i = 0;i < exe->numberFunction;i++)
-        if(exe->functions[i].address < address & exe->functions[i].address + exe->functions[i].size > address)
+        if(exe->functions[i].address <= address && exe->functions[i].address + exe->functions[i].size > address)
             return &exe->functions[i];
 
     return 0;

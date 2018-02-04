@@ -2,14 +2,13 @@
 #define FUNCTION_H
 
 #include "instruction.h"
-#include "executable.h"
 
 typedef struct
 {
     char* name;
     int numberInstruction;
-    Instruction* instructions;
-    Executable* exe;
+    Instruction* firstInstruction;
+    void* exe;
     t_elf_section* section;
     int address;
     int size;

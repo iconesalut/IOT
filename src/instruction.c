@@ -13,3 +13,8 @@ char* instructionToString(Instruction* instruction)
     result[strlen(result)-1] = "\n";
     return result;
 }
+Instruction* nextInstruction(Instruction* instruction)
+{
+    Instruction* insn = (Instruction*)instruction->next;
+    return insn;
+}

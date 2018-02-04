@@ -1,6 +1,4 @@
 #include "executable.h"
-#include <capstone/capstone.h>
-#include <capstone/x86.h>
 #include <stdio.h>
 #include <stdlib.h>
 
