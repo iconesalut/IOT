@@ -81,7 +81,9 @@ int disassembly(Executable* exe)
                             {
                                 printf("%s->\t%s\t%s\n", f->name, insn[j].mnemonic, insn[j].op_str);
                                 Instruction instruction = {insn->address, insn->size, f, insn->mnemonic, 1, insn->op_str, (void*)f->firstInstruction};
-                                f->firstInstruction = &instruction;
+                                Instruction* instruction_ptr = malloc(sizeof(Instruction));
+                                *instruction_ptr = instruction;
+                                f->firstInstruction = instruction_ptr;
                             }
                     }
                 }
