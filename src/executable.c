@@ -80,9 +80,13 @@ int disassembly(Executable* exe)
                             if(f->optimizable)
                             {
                                 printf("%s->\t%s\t%s\n", f->name, insn[j].mnemonic, insn[j].op_str);
-                                Instruction instruction = {insn->address, insn->size, f, insn->mnemonic, 1, insn->op_str, (void*)f->firstInstruction};
                                 Instruction* instruction_ptr = malloc(sizeof(Instruction));
-                                *instruction_ptr = instruction;
+                                instruction_ptr->address = insn[j].address;
+                                instruction_ptr->size = insn[j].size;
+                                instruction_ptr->function = f;
+                                instruction_ptr->mnemonic = insn[j].mnemonic;
+                                instruction_ptr->operands = insn[j].op_str;
+                                instruction_ptr->next = (void*)f->firstInstruction;
                                 f->firstInstruction = instruction_ptr;
                             }
                     }
@@ -107,12 +111,14 @@ void loadExecutable(Executable* exe, const char* name)
         if(exe->functions[i].optimizable)
         {
             Instruction* instruct = exe->functions[i].firstInstruction;;
+            printf("%s\n", exe->functions[i].name);
             while(instruct != 0)
             {
-                printf(instructionToString(instruct));
+                char* str = instructionToString(instruct);
+                printf(str);
+                free(str);
                 instruct = nextInstruction(instruct);
             }
-            printf("%s\n", exe->functions[i].name);
         }
     }
 }

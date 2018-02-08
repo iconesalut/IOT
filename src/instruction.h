@@ -13,7 +13,7 @@ typedef struct
     void* function;
     char* mnemonic;
     int numberOperand;
-    char** operands;
+    char* operands;
     void* next;
 }Instruction;
 
