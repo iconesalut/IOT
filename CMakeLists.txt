@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+set(CMAKE_MODULE_PATH /home/icone/github/IOT/)
+
 project(IOT)
 set(SOURCE
     src/Elfparse/elf_free.c
@@ -23,7 +25,7 @@ set(SOURCE
     src/function.c
     src/instruction.c
     src/executable.c
-    src/main.c
+    src/main.go
 )
 add_executable(${PROJECT_NAME} ${SOURCE})
 target_link_libraries(
