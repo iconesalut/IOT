@@ -25,9 +25,8 @@ set(SOURCE
     src/function.c
     src/instruction.c
     src/executable.c
-    src/main.go
 )
-add_executable(${PROJECT_NAME} ${SOURCE})
+add_library(${PROJECT_NAME} ${SOURCE})
 target_link_libraries(
     ${PROJECT_NAME}
     capstone

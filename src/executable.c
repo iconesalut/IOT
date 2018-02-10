@@ -56,7 +56,8 @@ int disassembly(Executable* exe)
 {
     csh handle;
     cs_open(CS_ARCH_X86, CS_MODE_64, &handle);
-    cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT);
+    cs_option(handle, CS_OPT_SYNTAX, CS_OPT_SYNTAX_ATT); 
+    cs_option(handle, CS_OPT_DETAIL, CS_OPT_ON);
 
     size_t i;
     for(i = 0;i < elf_header_get_shnum(exe->elf);i++)
@@ -64,7 +65,6 @@ int disassembly(Executable* exe)
         const char* name;
         if(elf_section_get_name(exe->elf, &exe->elf->sections[i], &name) != -1)
         {
-            printf("%s\n", name);
             if(!strcmp(name, ".text"))
             {
                 cs_insn* insn;
@@ -85,7 +85,16 @@ int disassembly(Executable* exe)
                                 instruction_ptr->size = insn[j].size;
                                 instruction_ptr->function = f;
                                 instruction_ptr->mnemonic = insn[j].mnemonic;
-                                instruction_ptr->operands = insn[j].op_str;
+                                //instruction_ptr->operands = insn[j].op_str;
+                                //cs_detail* detail = &insn[j].detail;
+                                instruction_ptr->numberOperand = 0;//detail->x86.op_count; 
+                          /*       instruction_ptr->operands = malloc(sizeof(Operand) * instruction_ptr->numberOperand);
+                                size_t n;
+                                for(n = 0;n < instruction_ptr->numberOperand;n++)
+                                {
+                                    instruction_ptr->operands[n].type = 1;
+                                    instruction_ptr->operands[n].reg = "ebp";
+                                }*/
                                 instruction_ptr->next = 0;//(void*)f->firstInstruction;
                                 if(f->firstInstruction != 0)
                                 {
@@ -104,9 +113,11 @@ int disassembly(Executable* exe)
                             }
                     }
                 }
+                cs_free(insn, count);
             }
         }
     }
+    cs_close(&handle);
     return 0;
 }
 
@@ -139,7 +150,7 @@ void saveAt(Executable* exe, char* file_name)
                 char* str = functionToString(&exe->functions[i]);
                 printf("%s", str);
                 fprintf(src, "%s", str);
-//                free(str);
+                free(str);
             }
         }
     }
