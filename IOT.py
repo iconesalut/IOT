@@ -147,7 +147,6 @@ class Executable():
         dis = Cs(CS_ARCH_X86, CS_MODE_64)
         dis.syntax = CS_OPT_SYNTAX_ATT
         dis.detail = True
-
         for section in self.exe.sections:
             if section.name != ".rodata" and section.name != ".data" and section.name != ".bss":
                 for i, insn in enumerate(dis.disasm(section.bytes, section.header.sh_offset)):
@@ -160,7 +159,7 @@ class Executable():
 
     def save_at(self, file_name):
         file_src = file_name + "_src.s"
-        src_file = open(file_src, "w")
+        src_file = open(file_src,"w")
 
 #        src_file.write(self.print_datasection(self.find_section(".rodata")))
 #        src_file.write(self.print_datasection(self.find_section(".data")))

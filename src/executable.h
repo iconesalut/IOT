@@ -3,16 +3,17 @@
 
 #include "function.h"
 
-typedef struct
+struct Executable
 {
     t_elf* elf;
     int numberFunction;
     const char* name;
     Function* functions;
-}Executable;
+};
 
 void loadExecutable(Executable* exe, const char* name);
 void unloadExecutable(Executable* exe);
+void saveAt(Executable* exe, char* file_name);
 
 t_elf_section* findSections(Executable* exe, const char* name);
 t_elf_section* findSectioni(Executable* exe, const int address);

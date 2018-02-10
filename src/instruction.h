@@ -1,21 +1,18 @@
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
-#include "Elfparse/elfparse.h"
-#include <capstone/capstone.h>
-#include <capstone/x86.h>
-#include <string.h>
+#include "operand.h"
 
-typedef struct
+struct Instruction
 {
     int address;
     int size;
     void* function;
     char* mnemonic;
     int numberOperand;
-    char* operands;
+    Operand* operands;
     void* next;
-}Instruction;
+};
 
 char* instructionToString(Instruction* instruction);
 Instruction* nextInstruction(Instruction* instruction);

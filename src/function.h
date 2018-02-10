@@ -3,7 +3,7 @@
 
 #include "instruction.h"
 
-typedef struct
+struct Function
 {
     char* name;
     int numberInstruction;
@@ -13,7 +13,7 @@ typedef struct
     int address;
     int size;
     int optimizable;
-}Function;
+};
 
 Instruction* findInstruction(Function* function, int address);
 char* functionToString(Function* function);

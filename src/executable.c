@@ -34,7 +34,7 @@ int extractFunction(Executable* exe)
         elf_sym_get_name(exe->elf, sym, &name);
         
         Function f = {name, 0, 0, exe, findSectioni(exe, elf_sym_get_value(exe->elf, sym)), elf_sym_get_value(exe->elf, sym), elf_sym_get_size(exe->elf, sym), 0};
-		if(elf_sym_get_value(exe->elf, sym) !=0 & elf_sym_get_size(exe, sym) != 0 & elf_sym_get_info(exe, sym) == 18 & /*strcmp(name, "_start") &*/ name != "")
+		if(elf_sym_get_value(exe->elf, sym) !=0 & elf_sym_get_size(exe, sym) != 0 & elf_sym_get_info(exe, sym) == 18 & (strcmp(name, "_start") | !strcmp(name, "main")) & name != "")
 		{
             f.optimizable = 1;
 			printf(name);
@@ -79,15 +79,28 @@ int disassembly(Executable* exe)
                         if(f != 0)
                             if(f->optimizable)
                             {
-                                printf("%s->\t%s\t%s\n", f->name, insn[j].mnemonic, insn[j].op_str);
+                                f->numberInstruction++;
                                 Instruction* instruction_ptr = malloc(sizeof(Instruction));
                                 instruction_ptr->address = insn[j].address;
                                 instruction_ptr->size = insn[j].size;
                                 instruction_ptr->function = f;
                                 instruction_ptr->mnemonic = insn[j].mnemonic;
                                 instruction_ptr->operands = insn[j].op_str;
-                                instruction_ptr->next = (void*)f->firstInstruction;
-                                f->firstInstruction = instruction_ptr;
+                                instruction_ptr->next = 0;//(void*)f->firstInstruction;
+                                if(f->firstInstruction != 0)
+                                {
+                                    Instruction* last = f->firstInstruction;
+                                    while(last->next != 0)
+                                    {
+                                        last = nextInstruction(last);
+                                    }
+                                    last->next = (void*)instruction_ptr;
+                                }
+                                else
+                                {
+                                  f->firstInstruction = instruction_ptr;
+                                }
+                                //f->firstInstruction = instruction_ptr;
                             }
                     }
                 }
@@ -102,25 +115,35 @@ void loadExecutable(Executable* exe, const char* name)
     exe->elf = malloc(sizeof(t_elf));
     int ret = elf_load_file(name, exe->elf);
     exe->name = name;
+    printf("---------------extract the function---------------------\n");
     extractFunction(exe);
+    printf("-------------disassembly the exexutable-----------------\n");
     disassembly(exe);
-    printf("------------------------------\n");
+}
+void saveAt(Executable* exe, char* file_name)
+{
+    printf("-----------------create a new file----------------------\n");
+    FILE* src = fopen(file_name, "w");
+    if(src == NULL)
+      exit(-1);
+    printf("-----------------write in the file----------------------\n");
     size_t i;
     for(i = 0;i < exe->numberFunction;i++)
     {
         if(exe->functions[i].optimizable)
         {
-            Instruction* instruct = exe->functions[i].firstInstruction;;
+            Instruction* instruct = exe->functions[i].firstInstruction;
             printf("%s\n", exe->functions[i].name);
-            while(instruct != 0)
+            if(exe->functions[i].optimizable)
             {
-                char* str = instructionToString(instruct);
-                printf(str);
-                free(str);
-                instruct = nextInstruction(instruct);
+                char* str = functionToString(&exe->functions[i]);
+                printf("%s", str);
+                fprintf(src, "%s", str);
+//                free(str);
             }
         }
     }
+    fclose(src);
 }
 void unloadExecutable(Executable* exe)
 {
