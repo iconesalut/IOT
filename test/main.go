@@ -1,12 +1,17 @@
 package main
 
-// #cgo LDFLAGS: -lIOT -lcapstone
-// #include "executable.h"
-import("C")
+import "os"
+import "fmt"
+import "./IOT"
+
 
 func main(){
-  var e C.struct_Executable
-  C.loadExecutable(&e, C.CString("/home/icone/IOT/test_iot"))
-  C.saveAt(&e, C.CString("./src.s"))
-  C.unloadExecutable(&e)
+	if len(os.Args) > 2{
+		var exe IOT.Executable
+		exe.Load(os.Args[1])
+		exe.SaveAt(os.Args[2])
+		exe.Unload()
+	}else{
+		fmt.Println( os.Args[0], "[input] [output]")
+	}
 }

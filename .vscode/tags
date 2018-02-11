@@ -19,16 +19,16 @@ __str__	../IOT.py	/^    def __str__(self):$/;"	kind:member	line:118
 __str__	../IOT.py	/^    def __str__(self):$/;"	kind:member	line:12
 __str__	../IOT.py	/^    def __str__(self):$/;"	kind:member	line:78
 argparse	../IOT.py	/^import argparse$/;"	kind:namespace	line:5
-args	../IOT.py	/^    args = parse.parse_args()$/;"	kind:variable	line:253
-exe	../IOT.py	/^    exe = Executable(args.file_input)$/;"	kind:variable	line:254
-extract_function	../IOT.py	/^    def extract_function(self):$/;"	kind:member	line:224
-find_function	../IOT.py	/^    def find_function(self, address):$/;"	kind:member	line:211
-find_functionn	../IOT.py	/^    def find_functionn(self, name):$/;"	kind:member	line:217
+args	../IOT.py	/^    args = parse.parse_args()$/;"	kind:variable	line:252
+exe	../IOT.py	/^    exe = Executable(args.file_input)$/;"	kind:variable	line:253
+extract_function	../IOT.py	/^    def extract_function(self):$/;"	kind:member	line:223
+find_function	../IOT.py	/^    def find_function(self, address):$/;"	kind:member	line:210
+find_functionn	../IOT.py	/^    def find_functionn(self, name):$/;"	kind:member	line:216
 find_instruction	../IOT.py	/^    def find_instruction(self, address):$/;"	kind:member	line:111
-find_section	../IOT.py	/^    def find_section(self, section_name):$/;"	kind:member	line:198
-find_sectiona	../IOT.py	/^    def find_sectiona(self, address):$/;"	kind:member	line:204
+find_section	../IOT.py	/^    def find_section(self, section_name):$/;"	kind:member	line:197
+find_sectiona	../IOT.py	/^    def find_sectiona(self, address):$/;"	kind:member	line:203
 os	../IOT.py	/^import os$/;"	kind:namespace	line:6
-parse	../IOT.py	/^    parse = argparse.ArgumentParser()$/;"	kind:variable	line:250
-save_at	../IOT.py	/^    def save_at(self, file_name):$/;"	kind:member	line:161
+parse	../IOT.py	/^    parse = argparse.ArgumentParser()$/;"	kind:variable	line:249
+save_at	../IOT.py	/^    def save_at(self, file_name):$/;"	kind:member	line:160
 setup	../IOT.py	/^    def setup(self):$/;"	kind:member	line:100
 setup	../IOT.py	/^    def setup(self):$/;"	kind:member	line:68
