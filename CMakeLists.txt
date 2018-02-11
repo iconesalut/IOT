@@ -35,3 +35,6 @@ target_link_libraries(
 install(TARGETS ${PROJECT_NAME}
     DESTINATION /usr/lib/
 )
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/sample/
+    DESTINATION /usr/share/IOT/
+)
