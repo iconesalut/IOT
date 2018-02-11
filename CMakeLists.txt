@@ -26,9 +26,12 @@ set(SOURCE
     core/instruction.c
     core/executable.c
 )
-add_library(${PROJECT_NAME} ${SOURCE})
+add_library(${PROJECT_NAME} SHARED ${SOURCE})
 target_link_libraries(
     ${PROJECT_NAME}
     capstone
 )
 
+install(TARGETS ${PROJECT_NAME}
+    DESTINATION /usr/lib/
+)
